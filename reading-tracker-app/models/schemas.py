@@ -37,6 +37,11 @@ class User(BaseModel):
     yearly_goal: int = 12
 
 
+class GoalUpdate(BaseModel):
+    """Data for updating yearly reading goal."""
+    goal: int
+
+
 # Book Models
 
 class BookCreate(BaseModel):
@@ -46,6 +51,22 @@ class BookCreate(BaseModel):
     genre: Optional[str] = None
     total_pages: int = 0
     status: str = "to_read"
+
+
+class BookCreateRequest(BaseModel):
+    """Data for adding a new book via API (includes user_id)."""
+    user_id: int
+    title: str
+    author: str
+    genre: Optional[str] = None
+    total_pages: int = 0
+    status: str = "to_read"
+
+
+class BookUpdate(BaseModel):
+    """Data for updating a book."""
+    status: Optional[str] = None
+    current_page: Optional[int] = None
 
 
 class Book(BaseModel):
