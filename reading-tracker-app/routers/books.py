@@ -1,13 +1,14 @@
 """
 Books Router - API endpoints for book operations
+Uses Pydantic models from schemas.py for request/response validation.
 """
 
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional
 from datetime import datetime
 
 from database import Database, BookRepository, UserRepository
+from schemas import BookCreateRequest, Book, BookRating, BookStatus, BookUpdate
 
 
 router = APIRouter(prefix="/books", tags=["books"])
@@ -18,31 +19,10 @@ book_repo = BookRepository(db)
 user_repo = UserRepository(db)
 
 
-# Request/Response Models
-
-class BookCreate(BaseModel):
-    user_id: int
-    title: str
-    author: str
-    genre: Optional[str] = None
-    total_pages: int = 0
-    status: str = "to_read"
-
-
-class BookUpdate(BaseModel):
-    status: Optional[str] = None
-    current_page: Optional[int] = None
-
-
-class BookRating(BaseModel):
-    rating: float
-    review: Optional[str] = None
-
-
 # Endpoints
 
 @router.post("/")
-def add_book(book: BookCreate):
+def add_book(book: BookCreateRequest):
     """Add a new book."""
     book_id = book_repo.add_book(
         book.user_id,

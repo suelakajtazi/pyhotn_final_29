@@ -1,12 +1,12 @@
 """
 Users Router - API endpoints for user operations
+Uses Pydantic models from schemas.py for request/response validation.
 """
 
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from typing import Optional
 
 from database import Database, UserRepository
+from schemas import UserCreate, UserLogin, User, GoalUpdate
 
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -14,30 +14,6 @@ router = APIRouter(prefix="/users", tags=["users"])
 # Initialize database
 db = Database()
 user_repo = UserRepository(db)
-
-
-# Request/Response Models
-
-class UserCreate(BaseModel):
-    username: str
-    email: str
-    password: str
-
-
-class UserLogin(BaseModel):
-    username: str
-    password: str
-
-
-class UserResponse(BaseModel):
-    id: int
-    username: str
-    email: str
-    yearly_goal: int
-
-
-class GoalUpdate(BaseModel):
-    goal: int
 
 
 # Endpoints
