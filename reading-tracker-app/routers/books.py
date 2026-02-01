@@ -8,7 +8,7 @@ from typing import Optional
 from datetime import datetime
 
 from database import Database, BookRepository, UserRepository
-from schemas import BookCreateRequest, Book, BookRating, BookStatus, BookUpdate
+from models.schemas import BookCreateRequest, Book, BookRating, BookStatus, BookUpdate
 
 
 router = APIRouter(prefix="/books", tags=["books"])

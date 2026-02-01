@@ -6,7 +6,7 @@ Uses Pydantic models from schemas.py for request/response validation.
 from fastapi import APIRouter, HTTPException
 
 from database import Database, UserRepository
-from schemas import UserCreate, UserLogin, User, GoalUpdate
+from models.schemas import UserCreate, UserLogin, User, GoalUpdate
 
 
 router = APIRouter(prefix="/users", tags=["users"])
